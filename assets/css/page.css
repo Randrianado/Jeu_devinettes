@@ -1,0 +1,14 @@
+.par{
+    height: 300px;
+}
+.kj{
+    height:200px;
+    border: none;
+}
+.ss{
+    text-align: center;
+}
+.cent{
+    justify-content: center;
+    align-items: center;
+}
