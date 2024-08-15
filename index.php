@@ -67,7 +67,7 @@
         <section class="jumbotron text-center kk text-light">
           <div class="container">
             <h1 class="jumbotron-heading">Devinettes Niveau debutant</h1>
-            <p class="lead text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, fuga distinctio quos velit modi minima commodi, nobis nam ea tempore facere voluptatum quod porro, rerum perspiciatis ducimus esse excepturi natus.</p>
+            <p class="lead text-light">Petit Jeu de Devinettes pour distraire les jeuunes</p>
             <p>
               <a href="?page=1" class="btn btn-primary my-2">Premier Contenu</a>
               <a href="?page=2" class="btn btn-secondary my-2">Deuxieme contenu</a>

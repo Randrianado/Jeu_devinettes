@@ -21,7 +21,6 @@
         "email"=>$email,
         "commentaires"=>$commentaire
       ]);
-      // mail("kevinrandria788@gmail;com","to:.$email",$commentaire,$nom);
       $nom=$prenom=$commentaire=$email=null;
     }
   }

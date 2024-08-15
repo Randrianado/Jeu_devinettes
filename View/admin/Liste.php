@@ -1,52 +1,23 @@
 <?php
     require'../../Utils/auth.php';
     require '../../Utils/connexion.php';
-    //Pagination
-      $resultat=3;
-      $page=isset($_GET["page"]) ? (int)$_GET["page"] : 1;
-
-    //Comptage isanle zavatra ao anaty bd
-      $query=$conn->prepare("SELECT COUNT(*) FROM devinettes");
-      $query->execute();
-      $res1=$query->fetchColumn();
-
-    //calcul offset
-      $offset=($page - 1) * $resultat;
-    //affiche les données
-      $host=$conn->prepare("SELECT * FROM devinettes LIMIT :limit OFFSET :offset");
-      $host->bindValue(':limit',$resultat,PDO::PARAM_INT);
-      $host->bindValue(':offset',$offset,PDO::PARAM_INT);
-      $host->execute();
-
-
-      $totalPages=ceil($res1/$resultat);
-
     function recherche(){
       global $conn;
       extract($_POST);
-      $host=$conn->prepare("SELECT * FROM devinettes WHERE id LIKE :id");
+      $host=$conn->prepare("SELECT * FROM utilsateur WHERE pseudos LIKE :pseudos");
       $host->execute([
-          "id"=>"%".$search."%"
+          "pseudos"=>"%".$search."%"
       ]);
       $result=$host->fetchAll();
       return $result;
   }
-  function AfficheNom($nom){
-      global $conn;
-      $host=$conn->prepare("SELECT pseudos FROM utilsateur WHERE pseudos=:pseudos");
-      $host->execute([
-            "pseudos"=>$nom
-        ]);
-        $result=$host->fetch();
-        return $result;
-  }
+      $host=$conn->query("SELECT * FROM utilsateur");
   if(!empty($_POST)){
       $result=recherche();
   }
   else{
     $result=$host->fetchAll();
   }
-    $nom=AfficheNom($_GET["pseudos"]);
     fore();
 ?>
 <!doctype html>
@@ -84,7 +55,6 @@
       </form>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-        <a class="btn btn-primary" href="Liste.php">Listes</a>
           <a class="btn btn-primary" href="ajouter.php">Ajouter<span aria-hidden="true" class="font-52">&CirclePlus;</span></a>
           <a class="btn btn-success" href="../../Utils/SignOut.php">Sign out</a>
         </li>
@@ -99,8 +69,7 @@
                 <tr>
                   <th>id</th>
                   <th>Nom</th>
-                  <th>Reponses</th>
-                  <th>Modifier</th>
+                  <th>Role</th>
                   <th>Supprimer</th>
                 </tr>
               </thead>
@@ -108,9 +77,8 @@
                 <?php foreach($result as $results):?>
                   <tr>
                     <td><?php echo $results["id"]?></td>
-                    <td><?php echo $results["name"]?></td>
-                    <td><?php echo $results["solution"]?></td>
-                    <td><button class="btn btn-primary" ><a href="modifier.php?id=<?=$results["id"]?>" class="al">Modifier</a></button></td>
+                    <td><?php echo $results["pseudos"]?></td>
+                    <td><?php echo $results["role"]?></td>
                     <td>
                       <a onclick="confirmDeletion(event,'supp.php?id=<?=$results['id']?>')" class="al btn btn-danger">Supprimer</a>
                     </td>
@@ -120,16 +88,6 @@
             </table>
             <?php if(!$result):?>
                   <p class="text-danger">Aucun resultat pour cette recherche</p>
-            <?php else:?>
-                    <div class="container text-center">
-                          <ul class="pagination">
-                            <?php for ($i=1; $i <=$totalPages ; $i++):?>
-                              <li class="page-item">
-                                  <a class="page-link" href="?page=<?=$i?>"><?=$i?></a>
-                              </li> 
-                            <?php endfor?>
-                          </ul> 
-                    </div>
             <?php endif?>
           </div>
         </main>
